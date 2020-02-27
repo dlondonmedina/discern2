@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+
+   <!-- physics and other extras -->
+   <script src="js/aframe-environment-component.min.js"></script>
+   <script src="js/aframe-extras.loaders.min.js"></script>
+   <script src="js/aframe-extras.controls.min.js"></script>
+
+   <title>Document</title>
+</head>
+<body>
+   <script>
+      /* Recorder */
+      // AFRAME.registerComponent('recorder', {
+         
+      //    init: function () {
+      //       var el = this.el;
+      //       var defaultColor = el.getAttribute('material').color;
+      //       var start = true;
+      //       const constraints = { audio: true };
+      //       var chunks = [];
+
+      //       var onSuccess = function(stream) {
+      //          const mediaRecorder = new mediaRecorder(stream);
+
+      //          el.addEventListener('click', function () {
+      //             if (start) {
+      //                mediaRecorder.start();
+      //                el.setAttribute('color', 'green');
+      //                start = false;
+      //             } else {
+      //                mediaRecorder.stop();
+      //                el.setAttribute('color', defaultColor);
+      //                start = true;
+      //             }
+      //          });
+
+      //          mediaRecorder.onstop = function(e) {
+      //             var clip = document.createElement('a-entity');
+      //             clip.setAttribute('geometry', 'primitive: box');
+      //             clip.setAttribute('color', 'blue');
+      //             clip.setAttribute('height', 0.5);
+      //             clip.setAttribute('width', 0.5);
+      //             clip.setAttribute('depth', 0.5);
+      //             clip.setAttribute('position', position.x + ' ' + position.y + ' ' + (position.z - 0.5));
+                  
+      //             var blob = new Blob(chunks, {'type' : 'audio/ogg; codecs=opus'});
+      //             chunks = [];
+      //             const audioURL = window.URL.createObjectURL(blob);
+      //             clip.setAttribute('sound', 'src:' + audioURL);
+      //             clip.setAttribute('play');
+      //             document.querySelector('a-scene').appendChild(clip);
+      //          }
+
+      //          mediaRecorder.ondataavailable = function(e) {
+      //             chunks.push(e.data);
+      //          }
+
+      //       } 
+      //    }
+      // });
+      /* Play */
+      // AFRAME.registerComponent('play', {
+      //    init: function () {
+      //       var el = this.el;
+      //       var playing = false;
+      //       el.addEventListener('click', function () {
+      //          if (!playing) {
+      //             el.playSound();
+      //             playing = true;
+      //          } else {
+      //             el.stopSound();
+      //             playing = false;
+      //          }
+      //       });
+      //       el.addEventListener('triggerdown', function () {
+      //          if (!playing) {
+      //             el.playSound();
+      //             playing = true;
+      //          } else {
+      //             el.stopSound();
+      //             playing = false;
+      //          }
+      //       });
+      //    }
+      // });
+      /* WebSpeech */
+      const dialogue = {
+         "introduction": "Welcome to the Ignatian Pedagogical Paradigm in VR. In this app you will go through the practice of Discernment. The goal of this process is to help you make better decisions. Click the blue sphere to begin.",
+         "prayer1": "God of silence and God of all sound, help me listen. Help me to do the deep listening to the sounds of my soul, waiting to hear your soft voice calling me deeper into you. Give me attentive ears that begin to separate the noise from the sounds that are you; you who have been speaking to me and through me my whole life, for so long that you can seem like background noise. Today help me hear you anew",
+         "prayer2": "Today, O God of all days, give me an experience of your heart. Draw me deep into your very being, into the core of your love for me, others, and the world. Give me a glimpse of others the way you see others: loving them, forgiving them, and delighting in the way they give glory to God through their very existence. Help me to discern out of the open place of deep affection so that I too might be a useful vessel of your love in the world.",
+         "prayer3": "Almighty God, author of my life, help me learn to read what you have written on my heart. Give me discerning eyes and an untiring spirit to look within me in order to understand how to reach outside of me. And once I have begun to read you aright, give me the generosity to help others read you, to sound you out one letter, one word of radical giving at a time.",
+         "identify-decision": "Describe in a few words the decision that must be made or the issue that must be resolved. The issue should be practical and real. It needs to be in you right to make this decision, and you must have the necessary information to make an intelligent decision.",
+         "formulate-proposal": "Now that you have described the decision, you'll need to formulate this into a concrete, positive choice. You should state it as an X versus not X or X versus Y proposal. For example: I will stay in my current job as a discernment bot or I will accept a job offer from Amazon to deliver packages. Please click record when you are ready.",
+         "passage1": "And the apostles said to the Lord, 'Incrase our faith.' The Lord replied, 'If you have faith the size of a mustard seed, you would say to [this] mulberry tree, Be uprooted and planted in the see, and it would obay you.'",
+         "passage2": "Then he made the disciples get into the boat and precede him to the other side, while he dismissed the crowds. After doing so, he went up on the mountain by himself to pray. When it was evening he was there alone. Meanwhile the boat, already a few miles offshore, was being tossed about by the waves, for the wind was against it. During the fourth watch of the night, he came toward them, walking on the sea. When the disciples saw him walking on the sea they were terrified. It is a ghost, they said, and they cried out in fear. At once Jesus spoke to them, Take courage, it is I; do not be afraid. Peter said to him in reply, Lord, if it is you, command me to come to you on the water. He said, Come. Peter got out of the boat and began to walk on the water toward Jesus. But when he saw how strong the wind was he became frightened; and, beginning to sink, he cried out, Lord, save me!  Immediately Jesus stretched out his hand and caught him, and said to him, O you of little faith, why did you doubt? After they got into the boat, the wind died down. Those who were in the boat did him homage, saying, Truly, you are the Son of God.",
+         "passage3": "You are the salt of the earth. But if salt loses its taste, with what can it be seasoned? It is no longer good for anything but to be thrown out and trampled underfoot. You are the light of the world. A city set on a mountain cannot be hidden. Nor do they light a lamp and then put it under a bushel basket; it is set on a lampstand, where it gives light to all in the house. Just so, your light must shine before others, that they may see your good deeds and glorify your heavenly Father.",
+         "passage4": "Everyone who listens to these words of mine and acts on them will be like a wise man who built his house on rock. The rain fell, the floods came, and the winds blew and buffeted the house. But it did not collapse; it had been set solidly on rock.",
+         "passage5": "And he said to them, Suppose one of you has a friend to whom he goes at midnight and says, Friend, lend me three loaves of bread, for a friend of mine has arrived at my house from a journey and I have nothing to offer him, and he says in reply from within, Do not bother me; the door has already been locked and my children and I are already in bed. I cannot get up to give you anything. I tell you, if he does not get up to give him the loaves because of their friendship, he will get up to give him whatever he needs because of his persistence. And I tell you, ask and you will receive; seek and you will find; knock and the door will be opened to you. For everyone who asks, receives; and the one who seeks, finds; and to the one who knocks, the door will be opened. What father among you would hand his son a snake when he asks for a fish? Or hand him a scorpion when he asks for an egg? If you then, who are wicked, know how to give good gifts to your children, how much more will the Father in heaven give the holy Spirit to those who ask him?",
+         "pros": "Consider a list of all of the advantages of one choice on this decision.",
+         "cons": "consider a list of all of the advantages of the other choice on this decision"
+      };
+
+      AFRAME.registerComponent('speaker', {
+         schema: {
+            text: {
+               default: ''
+            }
+         },
+         
+         init: function () {
+            var data = this.data;
+            var el = this.el;
+            var utterance = new SpeechSynthesisUtterance();
+            utterance.lang = 'en-US';
+            utterance.pitch = .75;
+
+            el.addEventListener('click', function() {
+               utterance.text = dialogue[data.text];
+               speechSynthesis.speak(utterance);
+            });
+         }
+      });
+
+      /* Elevator */
+      AFRAME.registerComponent('elevator', {
+         schema: {
+            position: {default: '17.5 0 -18'}
+         },
+
+         init: function () {
+            var data = this.data;
+            var el = this.el;
+            
+            el.addEventListener('click', function () {
+               var cam = document.querySelector('#rig');
+               cam.setAttribute('position', data.position);
+            });
+            el.addEventListener('triggerup', function (e) {
+               var cam = document.querySelector('#rig');
+               cam.setAttribute('position', data.position);
+            });
+         }
+      });
+      
+      /* Color */
+      AFRAME.registerComponent('change-color-on-hover', {
+         schema: {
+            color: { default: 'red' }
+         },
+
+         init: function () {
+            var data = this.data;
+            var el = this.el;
+            var defaultColor = el.getAttribute('material').color;
+
+            el.addEventListener('mouseenter', function () {
+               el.setAttribute('color', data.color);
+            });
+
+            el.addEventListener('mouseleave', function () {
+               el.setAttribute('color', defaultColor);
+            });
+         }
+      });
+
+      AFRAME.registerComponent('x-button-listener', {
+         init: function() {
+            let el = this.el;
+            el.addEventListener('xbuttondown', function (evt) {
+               el.setAttribute('visible', !el.getAttribute('visible'));
+            });
+         }
+      });
+   </script>
+   <a-scene physics='debug:true;' stats inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+      <!-- Assets -->
+      <a-asset-item id='architecture' src='models/wizlib/scene.gltf'></a-asset-item>
+      <a-asset-item id='monk' src='models/monk/scene.gltf'></a-asset-item>
+      <a-asset-item id='left' src='models/controller-left/scene.gltf'></a-asset-item>
+      <a-asset-item id='right' src='models/controller-right/scene.gltf'></a-asset-item>
+
+
+
+      <!-- /Assets  -->
+         <!-- Camera -->
+            <a-entity id='rig' position='17.5 1.6 -18' rotation='0 130 0' movement-controls='' position-listener='' gamepad-controls='' trackpad-controls='' keyboard-controls='' touch-controls=''>
+               <a-entity camera id='player' position='0 0 0' look-controls='pointerLockEnabled: true'>
+                  <a-cursor color='#FFF' position='0 0 -.5'></a-cursor>
+               </a-entity>
+               <a-entity oculus-touch-controls="hand: left"></a-entity>
+               <a-entity oculus-touch-controls="hand: right" x-button-listener></a-entity>
+            </a-entity>
+            
+         <!-- /Camera  -->
+
+         <!-- Environment -->
+         <a-entity gltf-model='#architecture' position='0 .5 0'></a-entity>
+         <a-entity environment="preset: forest; grid: none;" position='0 0 0'></a-entity>
+         <!-- /Environment -->
+
+         <!-- Monk -->
+         <a-entity gltf-model='#monk' position = '13.25 .25 -17' scale= '2 2 2' rotation='0 130 0' speaker='text: introduction'></a-entity>
+         <!-- /Monk -->
+
+         <!-- Enter -->
+         <a-sphere position='14.5 2.5 -15' color='blue' radius=.5 elevator='position: 14 0 -10' x-button-listener></a-sphere>
+         <!-- /Enter -->
+
+         <!-- Stair Controls -->
+         <!-- Up -->
+         <a-cone 
+            position='5.9 2.5 0.15' 
+            color='yellow' 
+            metalness='0.5' 
+            radius-bottom='0.25' 
+            elevator='position: 12.5 14.5 3' 
+            change-color-on-hover='color: green'
+         ></a-cone>
+         <!-- /Up -->
+         <!-- Down -->
+         <a-cone 
+            position='11 16.0 1' 
+            rotation='0 0 180' 
+            color='yellow' 
+            metalness='0.5' 
+            radius-bottom='0.25' 
+            elevator='position: 5 0 -3'
+            change-color-on-hover='color: green'
+         ></a-cone>
+         <!-- /Down -->
+         <!-- /Stair Controls -->
+         
+         <!-- Decision -->
+         <a-sphere position='-0.1 2.5 0' material='transparent: true; opacity: 0.1;' radius=.4 speaker='text: identify-decision'>
+         </a-sphere>
+         <a-sphere position='-12 2.5 -12' color='blue' radius=.4 speaker='text: formulate-proposal'></a-sphere>
+         <!-- /Decision -->
+
+         <!-- Prayers -->
+         <a-sphere position='9.5 2.5 7.0' color='blue' radius=.4 speaker='text: prayer2'>
+         </a-sphere>
+         <a-sphere position='16.75 2.5 -.5' color='blue' radius=.4 speaker='text: prayer3'>
+         </a-sphere>
+         <a-sphere position='-0.1 2.5 -14' color='blue' radius=.4 speaker='text: prayer1'></a-sphere>
+         <!-- /Prayers -->  
+
+         <!-- Verses (upstairs) -->
+         <a-box position='-11.50 16.5 11.75' color='green' speaker='text: passage1'></a-box>
+         <a-box position='12.85 16.5 12.25' color='green' speaker='text: passage2'></a-box>
+         <a-box position='-12.25 16.5 -12.6' color='green' speaker='text: passage3'></a-box>
+         <a-box position='12.50 16.5 5.25' color='green' speaker='text: passage4'></a-box>
+         <a-box position='13 16.5 -11.5' color='green' speaker='text: passage5'></a-box>
+         <!-- /Verses -->
+
+</body>
+</html>

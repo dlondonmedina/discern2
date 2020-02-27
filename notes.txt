@@ -1,0 +1,7 @@
+https://github.com/archilogic-com/aframe-recorder/blob/master/a-recorder.js
+https://aframe.io/docs/1.0.0/components/sound.html
+https://aframe.io/docs/1.0.0/introduction/writing-a-component.html
+https://github.com/aframevr/aframe/blob/master/docs/components/raycaster.md
+https://aframe.io/docs/1.0.0/components/camera.html
+https://aframe.io/docs/1.0.0/components/cursor.html#configuring-the-cursor-through-the-raycaster-component
+https://aframe.io/docs/1.0.0/introduction/interactions-and-controllers.html#supporting-multiple-types-of-controllers
