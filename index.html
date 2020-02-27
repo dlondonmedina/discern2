@@ -120,7 +120,7 @@
             utterance.lang = 'en-US';
             utterance.pitch = .75;
 
-            el.addEventListener('click', function() {
+            el.addEventListener('triggerdown', function() {
                utterance.text = dialogue[data.text];
                speechSynthesis.speak(utterance);
             });
@@ -137,11 +137,11 @@
             var data = this.data;
             var el = this.el;
             
-            el.addEventListener('click', function () {
-               var cam = document.querySelector('#rig');
-               cam.setAttribute('position', data.position);
-            });
-            el.addEventListener('triggerup', function (e) {
+            // el.addEventListener('click', function () {
+            //    var cam = document.querySelector('#rig');
+            //    cam.setAttribute('position', data.position);
+            // });
+            el.addEventListener('triggerdown', function (e) {
                var cam = document.querySelector('#rig');
                cam.setAttribute('position', data.position);
             });
@@ -168,15 +168,6 @@
             });
          }
       });
-
-      AFRAME.registerComponent('x-button-listener', {
-         init: function() {
-            let el = this.el;
-            el.addEventListener('xbuttondown', function (evt) {
-               el.setAttribute('visible', !el.getAttribute('visible'));
-            });
-         }
-      });
    </script>
    <a-scene physics='debug:true;' stats inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
       <!-- Assets -->
@@ -191,10 +182,10 @@
          <!-- Camera -->
             <a-entity id='rig' position='17.5 1.6 -18' rotation='0 130 0' movement-controls='' position-listener='' gamepad-controls='' trackpad-controls='' keyboard-controls='' touch-controls=''>
                <a-entity camera id='player' position='0 0 0' look-controls='pointerLockEnabled: true'>
-                  <a-cursor color='#FFF' position='0 0 -.5'></a-cursor>
+                  <a-entity cursor='downEvents: triggerdown; upEvents: triggerUp' geometry='primitive: ring' color='#FFF' position='0 0 -.5'></a-entity>
                </a-entity>
                <a-entity oculus-touch-controls="hand: left"></a-entity>
-               <a-entity oculus-touch-controls="hand: right" x-button-listener></a-entity>
+               <a-entity oculus-touch-controls="hand: right"></a-entity>
             </a-entity>
             
          <!-- /Camera  -->
